@@ -42,15 +42,4 @@ class AuthController extends Controller {
     public function postToken() {
         $this->getKernel()->oauth->handleTokenRequest(Request::createFromGlobals())->send();
     }
-
-    /**
-     * @param string $client_id
-     * @param string $client_secret
-     * @param string $redirect_uri
-     */
-    public function getRegister($client_id, $client_secret, $redirect_uri = '/') {
-        $storage = $this->getKernel()->oauth->getStorage('user_credentials');
-        $storage->setClientDetails($client_id, $client_secret, $redirect_uri);
-        $this->redirect('/authorize?client_id=' . $client_id . '&response_type=code&state=xz');
-    }
 }

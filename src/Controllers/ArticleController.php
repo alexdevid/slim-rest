@@ -14,7 +14,7 @@ class ArticleController extends Controller {
     }
 
     public function getArticle($id) {
-        $this->response(['get article' => $id]);
+        $this->response([$id]);
     }
 
     public function postArticle() {
@@ -22,7 +22,7 @@ class ArticleController extends Controller {
     }
 
     public function putArticle($id) {
-        $this->response(['put article' => $id]);
+        $this->response([$id]);
     }
 
     public function deleteArticle($id) {

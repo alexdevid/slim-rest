@@ -1,7 +1,5 @@
 <?php
 return [
-    'db' => ['database' => 5],
-    'security' => require_once __DIR__ . DIRECTORY_SEPARATOR . 'security.php',
     'routes' => [
         'article' => [
             ['/articles', 'get', true],
@@ -13,8 +11,7 @@ return [
         'auth' => [
             ['/token', 'post'],
             ['/authorize', 'get'],
-            ['/authorize', 'post'],
-            ['/register/:client_id/:client_secret', 'get']
+            ['/authorize', 'post']
         ]
     ]
 ];

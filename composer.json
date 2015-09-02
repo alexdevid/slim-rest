@@ -1,7 +1,7 @@
 {
   "require": {
     "slim/slim": "2.3.0",
-    "predis/predis": "1.*",
+    "propel/propel": "~2.0@dev",
     "bshaffer/oauth2-server-php" : "*"
   },
   "autoload": {

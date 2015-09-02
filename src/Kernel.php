@@ -6,7 +6,6 @@ use OAuth2\GrantType\ClientCredentials;
 use OAuth2\Scope;
 use OAuth2\Server;
 use OAuth2\Storage\Memory;
-use OAuth2\Storage\Redis;
 
 class Kernel {
 
@@ -34,15 +33,23 @@ class Kernel {
      * @return $this
      */
     public function run() {
-        $this->config = require_once __DIR__ . '/Config/config.php';
+        require_once __DIR__ . '/../config/propel/config.php';
+        $this->config = require_once __DIR__ . '/../config/config.php';
         $this->app = new \Slim\Slim();
         $this->app->config([
             'templates.path' => __DIR__ . '/Views/'
         ]);
-        $this->db = new \Predis\Client($this->config['db']);
         $this->oauth = $this->configureOAuth();
         $this->instantiateRoutes()->app->run();
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRequestBody() {
+        $json = $this->app->request()->getBody();
+        return json_decode($json, true);
     }
 
     /**
@@ -94,7 +101,8 @@ class Kernel {
      * @return Server
      */
     private function configureOAuth() {
-        $storage = new Redis($this->db);
+
+        $storage = new \Components\PropelStorage();
         $server = new Server($storage);
 
         $server->addGrantType(new ClientCredentials($storage));
@@ -121,6 +129,6 @@ class Kernel {
     }
 
     private function __construct() {
-        
+
     }
 }

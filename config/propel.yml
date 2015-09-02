@@ -1,0 +1,25 @@
+propel:
+  paths:
+    projectDir: /../
+    schemaDir: config
+    outputDir: config/propel
+    phpDir: src/
+    phpConfDir: config/propel
+    sqlDir: config/propel
+  database:
+    connections:
+        dev_main:
+          adapter: mysql
+          classname: Propel\Runtime\Connection\ConnectionWrapper
+          dsn: "mysql:host=localhost;dbname=dev_main"
+          user: root
+          password: 5143
+          attributes:
+  runtime:
+    defaultConnection: dev_main
+    connections:
+      - dev_main
+  generator:
+    defaultConnection: dev_main
+    connections:
+      - dev_main
