@@ -1,12 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: devid
- * Date: 26.08.15
- * Time: 11:59
- */
-
-namespace Controllers;
+namespace Components;
 
 
 class Controller implements ControllerInterface {
@@ -18,6 +11,13 @@ class Controller implements ControllerInterface {
         $this->getKernel()->app->contentType("application/json");
         echo json_encode($data);
         $this->getKernel()->app->stop();
+    }
+
+    /**
+     * @param string $url
+     */
+    public function redirect($url) {
+        return $this->getKernel()->app->redirect($url);
     }
 
     /**

@@ -1,5 +1,5 @@
 <?php
 return [
-    'key_name' => 'key',
-    'key_value' => 'yoursupersecretkey'
+    'client_id' => 'key',
+    'key_value' => 'client_secret'
 ];

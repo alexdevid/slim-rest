@@ -1,16 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: devid
- * Date: 26.08.15
- * Time: 12:25
- */
-
-namespace Controllers;
+namespace Components;
 
 
 interface ControllerInterface {
     public function response(array $data);
+
+    public function redirect($url);
 
     public function getKernel();
 

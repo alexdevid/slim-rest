@@ -1,11 +1,6 @@
 <?php
+namespace Components;
 
-/**
- * Created by PhpStorm.
- * User: devid
- * Date: 26.08.15
- * Time: 15:04
- */
 class Route {
 
     const METHOD_DEFAULT = 'get';
@@ -83,7 +78,7 @@ class Route {
     /**
      * @param string $controllerName
      * @return \Controllers\ControllerInterface
-     * @throws Exception
+     * @throws \Exception
      */
     public function getController($controllerName) {
         $controllerName = '\\Controllers\\' . ucfirst($controllerName) . 'Controller';
