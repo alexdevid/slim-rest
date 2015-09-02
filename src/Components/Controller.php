@@ -4,6 +4,8 @@ namespace Components;
 
 class Controller implements ControllerInterface {
 
+    public $isPublic = false;
+
     /**
      * @param array $data
      */

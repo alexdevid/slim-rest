@@ -36,12 +36,11 @@ class Route {
     private $routeParams;
 
     /**
-     * @param string $controllerName
+     * @param string $path
      * @param array $routeParams
      */
-    public function __construct($controllerName, array $routeParams) {
+    public function __construct($path, array $routeParams) {
         $this->routeParams = $routeParams;
-
         $this->path = $routeParams[0];
         $this->setMethod()->setSecure();
         $this->action = $this->method . $this->getActionName();

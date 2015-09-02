@@ -1,3 +1,3 @@
-/.idea
-/vendor
-/src/Config/security.php
+.idea
+vendor
+config/propel/config.php

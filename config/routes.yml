@@ -1,0 +1,9 @@
+articles:     [article/getArticles, get, true]
+article:      [article/postArticle, post, true]
+article/:id:  [article/getArticle, get, true]
+article/:id:  [article/putArticle, put, true]
+article/:id:  [article/deleteArticle, delete, true]
+
+token:        [auth/token, post]
+code:         [auth/getCode, post]
+authorize:    [auth/getAuthorize, get]

@@ -1,6 +1,6 @@
 propel:
   paths:
-    projectDir: /../
+    projectDir: /../../
     schemaDir: config
     outputDir: config/propel
     phpDir: src/

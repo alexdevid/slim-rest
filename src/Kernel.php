@@ -6,6 +6,7 @@ use OAuth2\GrantType\ClientCredentials;
 use OAuth2\Scope;
 use OAuth2\Server;
 use OAuth2\Storage\Memory;
+use Symfony\Component\Yaml\Yaml;
 
 class Kernel {
 
@@ -25,6 +26,11 @@ class Kernel {
     public $config;
 
     /**
+     * @var array
+     */
+    public $routes;
+
+    /**
      * @var Server
      */
     public $oauth;
@@ -34,7 +40,8 @@ class Kernel {
      */
     public function run() {
         require_once __DIR__ . '/../config/propel/config.php';
-        $this->config = require_once __DIR__ . '/../config/config.php';
+        $this->config = Yaml::parse(file_get_contents(__DIR__ . '/../config/config.yml'));
+        $this->routes = Yaml::parse(file_get_contents(__DIR__ . '/../config/routes.yml'));
         $this->app = new \Slim\Slim();
         $this->app->config([
             'templates.path' => __DIR__ . '/Views/'
@@ -56,23 +63,21 @@ class Kernel {
      * @return $this
      */
     private function instantiateRoutes() {
-        foreach ($this->config['routes'] as $controllerName => $routes) {
-            foreach ($routes as $routeParams) {
-                $route = new Route($controllerName, $routeParams);
-                $method = $route->method;
+        foreach ($this->routes as $path => $routeParams) {
+            $route = new Route($controllerName, $routeParams);
+            $method = $route->method;
 
-                $this->app->$method($route->path, function () use ($route) {
-                    if (!$route->controller instanceof \Controllers\AuthController) {
-                        $this->checkAuth($route);
-                    }
-                    $arguments = func_get_args();
-                    call_user_func_array([
-                        $route->controller,
-                        $route->action
-                    ], $arguments);
+            $this->app->$method($route->path, function () use ($route) {
+                if (!$route->controller->isPublic) {
+                    $this->checkAuth($route);
+                }
+                $arguments = func_get_args();
+                call_user_func_array([
+                    $route->controller,
+                    $route->action
+                ], $arguments);
 
-                });
-            }
+            });
         }
         return $this;
     }

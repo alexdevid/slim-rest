@@ -7,6 +7,8 @@ use Components\Controller;
 
 class AuthController extends Controller {
 
+    public $isPublic = true;
+
     /**
      * @throws \Slim\Exception\Stop
      */
@@ -24,7 +26,7 @@ class AuthController extends Controller {
     /**
      *
      */
-    public function postAuthorize() {
+    public function getCode() {
         $request = Request::createFromGlobals();
         $response = new Response();
         $is_authorized = ($this->getKernel()->app->request()->post('authorized') === 'yes');
