@@ -40,8 +40,8 @@ class Kernel {
      */
     public function run() {
         require_once __DIR__ . '/../config/propel/config.php';
-        $this->config = Yaml::parse(file_get_contents(__DIR__ . '/../config/config.yml'));
-        $this->routes = Yaml::parse(file_get_contents(__DIR__ . '/../config/routes.yml'));
+        //$this->config = Yaml::parse(file_get_contents(__DIR__ . '/../config/config.yml'));
+        $this->routes = Yaml::parse(file_get_contents(__DIR__ . '/../config/routes.yml'))['routes'];
         $this->app = new \Slim\Slim();
         $this->app->config([
             'templates.path' => __DIR__ . '/Views/'
@@ -63,20 +63,19 @@ class Kernel {
      * @return $this
      */
     private function instantiateRoutes() {
-        foreach ($this->routes as $path => $routeParams) {
-            $route = new Route($controllerName, $routeParams);
+        foreach ($this->routes as $routeParams) {
+            $route = new Route($routeParams);
             $method = $route->method;
-
-            $this->app->$method($route->path, function () use ($route) {
+            $this->app->$method('/' . $route->path, function () use ($route) {
                 if (!$route->controller->isPublic) {
                     $this->checkAuth($route);
                 }
                 $arguments = func_get_args();
-                call_user_func_array([
+                echo call_user_func_array([
                     $route->controller,
                     $route->action
                 ], $arguments);
-
+                $this->app->stop();
             });
         }
         return $this;

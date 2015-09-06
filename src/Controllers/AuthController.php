@@ -12,7 +12,7 @@ class AuthController extends Controller {
     /**
      * @throws \Slim\Exception\Stop
      */
-    public function getAuthorize() {
+    public function authorize() {
         $request = Request::createFromGlobals();
         $response = new Response();
 
@@ -33,6 +33,7 @@ class AuthController extends Controller {
         $this->getKernel()->oauth->handleAuthorizeRequest($request, $response, $is_authorized);
         if ($is_authorized) {
             $code = substr($response->getHttpHeader('Location'), strpos($response->getHttpHeader('Location'), 'code=') + 5, 40);
+            var_dump($code); die();
             $this->response(['success' => true, 'code' => $code]);
         }
         $response->send();
@@ -41,7 +42,7 @@ class AuthController extends Controller {
     /**
      *
      */
-    public function postToken() {
+    public function token() {
         $this->getKernel()->oauth->handleTokenRequest(Request::createFromGlobals())->send();
     }
 }

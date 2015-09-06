@@ -1,43 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database name="dev_main" defaultIdMethod="native" namespace="Models">
     <table name="client" phpName="Client">
-        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="client_id" type="varchar" size="64" required="true"/>
-        <column name="client_secret" type="varchar" size="128" required="true"/>
-        <column name="grant_types" type="varchar" size="128"/>
-        <column name="redirect_uri" type="varchar" size="2000"/>
-        <column name="scope" type="varchar" size="2000"/>
+        <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="client_id" type="VARCHAR" size="64" required="true"/>
+        <column name="client_secret" type="VARCHAR" size="128" required="true"/>
+        <column name="grant_types" type="VARCHAR" size="128"/>
+        <column name="redirect_uri" type="VARCHAR" size="2000"/>
+        <column name="scope" type="VARCHAR" size="2000"/>
         <unique>
             <unique-column name="client_id"/>
         </unique>
     </table>
     <table name="token" phpName="Token">
-        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="client_id" type="varchar" size="64" required="true"/>
-        <column name="token" type="varchar" size="128" required="true"/>
-        <column name="scope" type="varchar" size="2000"/>
-        <column name="expires" type="integer"/>
+        <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="client_id" type="VARCHAR" size="64" required="true"/>
+        <column name="token" type="VARCHAR" size="128" required="true"/>
+        <column name="scope" type="VARCHAR" size="2000"/>
+        <column name="expires" type="INTEGER"/>
         <foreign-key foreignTable="client">
             <reference foreign="client_id" local="client_id"/>
         </foreign-key>
     </table>
     <table name="code" phpName="Code">
-        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="code" type="varchar" size="64" required="true"/>
-        <column name="client_id" type="varchar" size="64" required="true"/>
-        <column name="redirect_uri" type="varchar" size="2000"/>
-        <column name="scope" type="varchar" size="2000"/>
-        <column name="expires" type="integer"/>
+        <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="code" type="VARCHAR" size="64" required="true"/>
+        <column name="client_id" type="VARCHAR" size="64" required="true"/>
+        <column name="redirect_uri" type="VARCHAR" size="2000"/>
+        <column name="scope" type="VARCHAR" size="2000"/>
+        <column name="expires" type="INTEGER"/>
         <foreign-key foreignTable="client">
             <reference foreign="client_id" local="client_id"/>
         </foreign-key>
     </table>
     <table name="article" phpName="Article">
-        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="title" type="varchar" size="256" required="true"/>
-        <column name="content" type="longvarchar" required="true"/>
-        <column name="description" type="longvarchar"/>
-        <column name="updated_at" type="date"/>
-        <column name="created_at" type="date" required="true"/>
+        <column name="id" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="title" type="VARCHAR" size="256" required="true"/>
+        <column name="content" type="LONGVARCHAR" required="true"/>
+        <column name="description" type="LONGVARCHAR"/>
+        <column name="updated_at" type="TIMESTAMP"/>
+        <column name="created_at" type="TIMESTAMP" required="true"/>
+        <behavior name="timestampable">
+            <parameter name="created_at" value="created_on" />
+            <parameter name="updated_at" value="updated_on" />
+        </behavior>
     </table>
 </database>

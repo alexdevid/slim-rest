@@ -36,15 +36,14 @@ class Route {
     private $routeParams;
 
     /**
-     * @param string $path
      * @param array $routeParams
      */
-    public function __construct($path, array $routeParams) {
+    public function __construct(array $routeParams) {
         $this->routeParams = $routeParams;
         $this->path = $routeParams[0];
         $this->setMethod()->setSecure();
-        $this->action = $this->method . $this->getActionName();
-        $this->controller = $this->getController($controllerName);
+        $this->action = $this->getActionName();
+        $this->controller = $this->getController();
     }
 
     /**
@@ -58,8 +57,8 @@ class Route {
      * @return $this
      */
     private function setMethod() {
-        if (isset($this->routeParams[1])) {
-            $this->method = $this->routeParams[1];
+        if (isset($this->routeParams[2])) {
+            $this->method = $this->routeParams[2];
             return $this;
         }
         $this->method = self::METHOD_DEFAULT;
@@ -70,17 +69,17 @@ class Route {
      * @return $this
      */
     private function setSecure() {
-        $this->secure = isset($this->routeParams[2]) ? $this->routeParams[2] : false;
+        $this->secure = isset($this->routeParams[3]) ? $this->routeParams[3] : false;
         return $this;
     }
 
     /**
-     * @param string $controllerName
      * @return \Controllers\ControllerInterface
      * @throws \Exception
      */
-    public function getController($controllerName) {
-        $controllerName = '\\Controllers\\' . ucfirst($controllerName) . 'Controller';
+    public function getController() {
+        $routeArray = explode('/', $this->routeParams[1]);
+        $controllerName = '\\Controllers\\' . ucfirst($routeArray[0]) . 'Controller';
         if (class_exists($controllerName)) {
             return new $controllerName;
         }
@@ -91,8 +90,7 @@ class Route {
      * @return string
      */
     private function getActionName() {
-        $path = trim($this->path, '/');
-        $pathArray = explode('/', $path);
-        return ucfirst($pathArray[0]);
+        $routeArray = explode('/', $this->routeParams[1]);
+        return trim($routeArray[1], '/');
     }
 }

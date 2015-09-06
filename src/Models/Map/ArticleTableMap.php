@@ -155,8 +155,8 @@ class ArticleTableMap extends TableMap
         $this->addColumn('title', 'Title', 'VARCHAR', true, 256, null);
         $this->addColumn('content', 'Content', 'LONGVARCHAR', true, null, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('updated_at', 'UpdatedAt', 'DATE', false, null, null);
-        $this->addColumn('created_at', 'CreatedAt', 'DATE', true, null, null);
+        $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
+        $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', true, null, null);
     } // initialize()
 
     /**
@@ -165,6 +165,19 @@ class ArticleTableMap extends TableMap
     public function buildRelations()
     {
     } // buildRelations()
+
+    /**
+     *
+     * Gets the list of behaviors registered for this table
+     *
+     * @return array Associative array (name => parameters) of behaviors
+     */
+    public function getBehaviors()
+    {
+        return array(
+            'timestampable' => array('create_column' => 'created_at', 'update_column' => 'updated_at', 'disable_created_at' => 'false', 'disable_updated_at' => 'false', 'created_at' => 'created_on', 'updated_at' => 'updated_on', ),
+        );
+    } // getBehaviors()
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.

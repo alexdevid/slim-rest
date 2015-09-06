@@ -74,8 +74,8 @@ CREATE TABLE `article`
     `title` VARCHAR(256) NOT NULL,
     `content` TEXT NOT NULL,
     `description` TEXT,
-    `updated_at` DATE,
-    `created_at` DATE NOT NULL,
+    `updated_at` DATETIME,
+    `created_at` DATETIME NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 

@@ -8,11 +8,13 @@ class Controller implements ControllerInterface {
 
     /**
      * @param array $data
+     * @param integer $status
+     * @return string
      */
-    public function response(array $data) {
+    public function response(array $data, $status = 200) {
+        $this->getKernel()->app->response()->setStatus($status);
         $this->getKernel()->app->contentType("application/json");
-        echo json_encode($data);
-        $this->getKernel()->app->stop();
+        return json_encode($data);
     }
 
     /**

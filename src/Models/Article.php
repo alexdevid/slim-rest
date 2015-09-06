@@ -14,7 +14,6 @@ use Models\Base\Article as BaseArticle;
  * long as it does not already exist in the output directory.
  *
  */
-class Article extends BaseArticle
-{
+class Article extends BaseArticle {
 
 }
